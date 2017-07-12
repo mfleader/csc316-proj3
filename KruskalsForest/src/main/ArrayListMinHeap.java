@@ -39,7 +39,8 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
      */
     private void makeArray(int[] array) {
     	for (int k = 0; k < array.length; k++) {
-    		this.array.set(k, new Integer(array[k]));
+    		//this.array.set(k, new Integer(array[k]));
+    		insert(array[k]);
     	}
     }
     
@@ -89,10 +90,16 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
         if (isEmpty()) {
         	throw new NoSuchElementException();
         }
+        if (!isHeap()) {
+        	throw new IllegalStateException("ya broke the heap!");
+        }
         int min = array.get(0);
         array.set(0, array.get(array.size() - 1));
         array.remove(array.size() - 1);
         downHeap(0);
+        if (!isHeap()) {
+        	throw new IllegalStateException("ya broke the heap!");
+        }
         return min;
     }
 
@@ -181,9 +188,6 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     	}
     }
     
-
-
-
     /**
      * Swaps two elements in the list
      * @param i
@@ -195,6 +199,16 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
         int tmp = array.get(i);
         array.set(i, array.get(j));
         array.set(j, tmp);
+    }
+    
+    
+    public boolean isHeap() {
+    	for (int k = 1; k < array.size(); ++k) {
+    		if (array.get(parent(k)) > array.get(k)) {
+    			return true;
+    		}
+    	}
+    	return true;
     }
 
 }
