@@ -13,20 +13,20 @@ import org.junit.Test;
  */
 public class ArrayListMinHeapTest {
 	
-	private static final int[] testHeap1 = { 1, 2, 3, 4 };
-	private static final int[] testHeap2 = { 2, 2, 2, 1 };
-	private static final int[] testHeap3 = { 1, 3, 2, 5, 4, 5 };
+	private static final Integer[] testHeap1 = { 1, 2, 3, 4 };
+	private static final Integer[] testHeap2 = { 2, 2, 2, 1 };
+	private static final Integer[] testHeap3 = { 1, 3, 2, 5, 4, 5 };
 
 	/**
 	 * Test method for {@link main.ArrayListMinHeap#ArrayListMinHeap()}.
 	 */
 	@Test
 	public void testArrayListMinHeap() {
-		ArrayListMinHeap  heap = new ArrayListMinHeap();
+		ArrayListMinHeap<Integer>  heap = new ArrayListMinHeap<Integer>();
 		assertTrue(heap.isEmpty());
 		heap.insert(1);
 		assertFalse(heap.isEmpty());
-		assertEquals(1, heap.removeMin());
+		assertEquals(1, heap.removeMin().intValue());
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class ArrayListMinHeapTest {
 	 */
 	@Test
 	public void testArrayListMinHeapIntArray() {
-		ArrayListMinHeap  heap = new ArrayListMinHeap(testHeap1);
+		ArrayListMinHeap<Integer>  heap = new ArrayListMinHeap<Integer>(testHeap1);
 		assertFalse(heap.isEmpty());
 		assertEquals(4, heap.size());
 	}
@@ -47,7 +47,7 @@ public class ArrayListMinHeapTest {
 	 */
 	@Test
 	public void testInsert() {
-		ArrayListMinHeap heap = new ArrayListMinHeap();
+		ArrayListMinHeap<Integer>  heap = new ArrayListMinHeap<Integer>();
 		heap.insert(2);
 		heap.insert(2);
 		heap.insert(2);
@@ -69,33 +69,33 @@ public class ArrayListMinHeapTest {
 	 */
 	@Test
 	public void testRemoveMin() {
-		ArrayListMinHeap  heap = new ArrayListMinHeap(testHeap1);
+		ArrayListMinHeap<Integer>  heap = new ArrayListMinHeap<Integer>(testHeap1);
 		assertFalse(heap.isEmpty());
 		assertEquals(4, heap.size());
 		
 		try {
-			assertEquals(1, heap.removeMin());
+			assertEquals(1, heap.removeMin().intValue());
 			assertEquals(3, heap.size());
 		} catch (IllegalStateException ise) {
 			fail();
 		}
 		
 		try {
-			assertEquals(2, heap.removeMin());
+			assertEquals(2, heap.removeMin().intValue());
 			assertEquals(2, heap.size());
 		} catch (IllegalStateException ise) {
 			fail();
 		}
 		
 		try {
-			assertEquals(3, heap.removeMin());
+			assertEquals(3, heap.removeMin().intValue());
 			assertEquals(1, heap.size());
 		} catch (IllegalStateException ise) {
 			fail();
 		}
 		
 		try {
-			assertEquals(4, heap.removeMin());
+			assertEquals(4, heap.removeMin().intValue());
 			assertEquals(0, heap.size());
 		} catch (IllegalStateException ise) {
 			fail();
@@ -104,7 +104,7 @@ public class ArrayListMinHeapTest {
 		try {
 			heap.insert(2);
 			assertEquals(1, heap.size());
-			assertEquals(2, heap.removeMin());
+			assertEquals(2, heap.removeMin().intValue());
 			assertTrue(heap.isEmpty());
 		} catch (IllegalStateException ise) {
 			fail();
@@ -117,7 +117,7 @@ public class ArrayListMinHeapTest {
 	 */
 	@Test
 	public void testMinChildIndex() {
-		ArrayListMinHeap  heap = new ArrayListMinHeap(testHeap3);
+		ArrayListMinHeap<Integer>  heap = new ArrayListMinHeap<Integer>(testHeap3);
 		
 		assertEquals(-1, heap.minChildIndex(heap.size()));
 		assertEquals(5, heap.minChildIndex(2));
@@ -131,7 +131,7 @@ public class ArrayListMinHeapTest {
 	 */
 	@Test
 	public void testIsHeap() {
-		ArrayListMinHeap  heap = new ArrayListMinHeap(testHeap1);
+		ArrayListMinHeap<Integer>  heap = new ArrayListMinHeap<Integer>(testHeap1);
 		assertFalse(heap.isEmpty());
 		assertEquals(4, heap.size());
 		
@@ -145,5 +145,17 @@ public class ArrayListMinHeapTest {
 
 
 	}
-
+	
+	/**
+	 * Test method for toString()
+	 */
+	@Test
+	public void testToString() {
+		ArrayListMinHeap<Integer>  heap = new ArrayListMinHeap<Integer>(testHeap1);
+		assertEquals(testHeap1[0]
+					 + "\n" + testHeap1[1]
+					 + "\n" + testHeap1[2]
+					 + "\n" + testHeap1[3], heap.toString());
+		
+	}
 }

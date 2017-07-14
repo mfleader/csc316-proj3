@@ -9,24 +9,24 @@ import java.util.NoSuchElementException;
  * @author Matthew F Leader
  *
  * @param <E>
- * 			ideally the thing you want to store in the nodes, but it only uses Integers for now
+ * 			ideally the thing you want to store in the nodes
  */
 public class ArrayListMinHeap<E extends Comparable<E>> {
 	/** an array list of the heap */
-    private List<Integer> array;
+    private List<E> array;
 
     /**
      * Null Constructor
      */
     public ArrayListMinHeap() {
-        array = new ArrayList<>();
+        array = new ArrayList<E>();
     }
     
     /**
      * Int array constructor
      * @param array
      */
-    public ArrayListMinHeap(int[] array) {
+    public ArrayListMinHeap(E[] array) {
     	this();
     	makeArray(array);
     }
@@ -37,7 +37,7 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
      * @param array
      * 				an array of integers
      */
-    private void makeArray(int[] array) {
+    private void makeArray(E[] array) {
     	for (int k = 0; k < array.length; k++) {
     		//this.array.set(k, new Integer(array[k]));
     		insert(array[k]);
@@ -65,7 +65,7 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
      * Peek at the minimum priority key stored at the root of the heap
      * @return the minimum priority key
      */
-    public int min() {
+    public E min() {
     	return array.get(0);
     }
     
@@ -75,8 +75,8 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
      * @param priority
      * 					the priority value of the node
      */
-    public void insert(int priority) {
-        array.add(priority);
+    public void insert(E element) {
+        array.add(element);
         upHeap(array.size() - 1);
     }
 
@@ -86,14 +86,14 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
      * position.
      * @return the priority value stored at the root
      */
-    public int removeMin() {
+    public E removeMin() {
         if (isEmpty()) {
         	throw new NoSuchElementException();
         }
         if (!isHeap()) {
         	throw new IllegalStateException("ya broke the heap!");
         }
-        int min = array.get(0);
+        E min = array.get(0);
         array.set(0, array.get(array.size() - 1));
         array.remove(array.size() - 1);
         downHeap(0);
@@ -150,9 +150,14 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
         if (right(parentIndex) > array.size() - 1) {
         	return left(parentIndex);
         }
+        if (array.get(left(parentIndex)).compareTo(array.get(right(parentIndex))) <= 0) {
+        	return left(parentIndex);
+        }
+        /*
         if (array.get(left(parentIndex)) <= array.get(right(parentIndex))) {
         	return left(parentIndex);
         }
+        */
         return right(parentIndex);
     }
 
@@ -165,26 +170,39 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     private void upHeap(int childIndex) {
     	int parentIndex = parent(childIndex);
     	if (childIndex > 0) {
+    		if (array.get(parentIndex).compareTo(array.get(childIndex)) > 0) {
+    			swap(parentIndex, childIndex);
+    			upHeap(parentIndex);
+    		}
+    		/*
     		if (array.get(parentIndex) > array.get(childIndex)) {
     			swap(parentIndex, childIndex);
     			upHeap(parentIndex);
     		}
+    		*/
     	}
     }
 
     /**
      * Bubble node down until it less than both of its children
-     * @param childIndex
+     * @param nodeIndex
      * 				the index of the node
      */
-    private void downHeap(int childIndex) {
-    	int minChildIndex = minChildIndex(childIndex);
+    private void downHeap(int nodeIndex) {
+    	int minChildIndex = minChildIndex(nodeIndex);
     	if (minChildIndex > -1) {
-    		if (array.get(minChildIndex) < array.get(childIndex)) {
-    			swap(minChildIndex, childIndex);
+    		if (array.get(minChildIndex).compareTo(array.get(nodeIndex)) < 0) {
+    			swap(minChildIndex, nodeIndex);
     			// the parent is now at the minChildIndex, so downHeap the value at that index
     			downHeap(minChildIndex);
     		}
+    		/*
+    		if (array.get(minChildIndex) < array.get(nodeIndex)) {
+    			swap(minChildIndex, nodeIndex);
+    			// the parent is now at the minChildIndex, so downHeap the value at that index
+    			downHeap(minChildIndex);
+    		}
+    		*/
     	}
     }
     
@@ -196,7 +214,7 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
      * 				the second element
      */
     private void swap(int i, int j) {
-        int tmp = array.get(i);
+        E tmp = array.get(i);
         array.set(i, array.get(j));
         array.set(j, tmp);
     }
@@ -204,11 +222,29 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     
     public boolean isHeap() {
     	for (int k = 1; k < array.size(); ++k) {
+    		if (array.get(parent(k)).compareTo(array.get(k)) > 0) {
+    			return true;
+    		}
+    		/*
     		if (array.get(parent(k)) > array.get(k)) {
     			return true;
     		}
+    		*/
     	}
     	return true;
+    }
+    
+    public String toString() {
+    	String heapStr = "";
+    	if (array.size() > 0) {
+    		heapStr = array.get(0).toString();
+    	}
+    	if (array.size() > 1) {
+    		for (int k = 1; k < array.size(); k++) {
+    			heapStr += "\n" + array.get(k).toString();
+    		}
+    	}
+    	return heapStr;
     }
 
 }
