@@ -32,29 +32,38 @@ public class proj3 {
 			}
 		}
 		
-		minSpanList = kruskalMST(heap);
 		
+		output.println("==========HEAP=============");
 		output.println(heap.toString());
+		output.println("===========MST=============");
+		minSpanList = kruskalMST(heap);
+		//System.out.println(minSpanList);
 		output.println(toStringMST());
+		output.println("=======ADJ_LIST============");
 		output.print(adjacencyList.toString());
 		
+		
+
+				
 	}
 		
 	
 	public static ArrayList<Edge> kruskalMST(ArrayListMinHeap<Edge> heap) {
-		ArrayList<Edge> minSpanList = new ArrayList<Edge>();
+		//ArrayList<Edge> minSpanList = new ArrayList<Edge>();
 		UpTree upTree = new UpTree();
 		for (Integer key : adjacencyList.getVertices()) {
 			upTree.makeSet(key);
-		}
-		int components = adjacencyList.numVertices();
+		}		
+		int components = adjacencyList.numVertices(); //number of connected components
 		while (components > 1) {
-			Edge edge = (Edge) heap.removeMin();
-			int u = upTree.find(edge.getOrigin());
+			Edge edge = (Edge) heap.removeMin();			
+			int u = upTree.find(edge.getOrigin());			
 			int v = upTree.find(edge.getDestination());
 			if (u != v) {
-				upTree.union(u, v);
-				minSpanList.add(edge);
+				upTree.union(u, v);				
+				minSpanList.add(findInsertion(edge), edge);
+				//System.out.println("findInsertion(" + edge + ") = " + findInsertion(edge));
+				//System.out.println(minSpanList);
 				components--;
 			}
 		}		
@@ -63,6 +72,7 @@ public class proj3 {
 	
 	public static String toStringMST() {
     	String list = "";
+    	System.out.println("1 minSpanList.size() = " + minSpanList.size());
     	if (minSpanList.size() > 0) {
     		list = minSpanList.get(0).toString();
     	}
@@ -72,6 +82,21 @@ public class proj3 {
     		}
     	}
     	return list;
+	}
+	
+	private static int findInsertion(Edge edge) {		
+		if (minSpanList.size() != 0) {
+			//System.out.println("minSpanList not empty");
+			for (int k = 0; k < minSpanList.size(); k++) {
+				//System.out.println("k = " + k);
+				Edge other = (Edge) minSpanList.get(k); 
+				if (edge.compareVerticesTo(other) < 0) {
+					return k;
+				}
+			}
+			return minSpanList.size();
+		}
+		return 0;
 	}
 	
 	

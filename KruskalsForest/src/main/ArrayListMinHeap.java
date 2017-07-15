@@ -78,6 +78,9 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     public void insert(E element) {
         array.add(element);
         upHeap(array.size() - 1);
+        if (!isHeap()) {
+        	throw new IllegalStateException("ya broke the heap!");
+        }
     }
 
     /**
@@ -223,13 +226,8 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     public boolean isHeap() {
     	for (int k = 1; k < array.size(); ++k) {
     		if (array.get(parent(k)).compareTo(array.get(k)) > 0) {
-    			return true;
+    			return false;
     		}
-    		/*
-    		if (array.get(parent(k)) > array.get(k)) {
-    			return true;
-    		}
-    		*/
     	}
     	return true;
     }
@@ -246,5 +244,7 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     	}
     	return heapStr;
     }
+    
+    
 
 }

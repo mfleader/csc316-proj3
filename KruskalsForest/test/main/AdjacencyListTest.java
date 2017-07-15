@@ -14,12 +14,7 @@ import org.junit.Test;
  */
 public class AdjacencyListTest {
 	
-	private static final Edge EDGE_1 = new Edge(0, 1, 1.0);
-	private static final Edge EDGE_2 = new Edge(0, 2, 1.0);
-	private static final Edge EDGE_3 = new Edge(1, 2, 1.0);
-	private static final Edge EDGE_4 = new Edge(1, 3, 1.0);
-	private static final Edge EDGE_5 = new Edge(1, 4, 1.0);
-	private static final Edge EDGE_6 = new Edge(2, 4, 1.0);
+
 	private static final String ADJ_LIST = "   1    2"
 											+ "\n   0    2"
 											+ "\n   0    1";
@@ -55,7 +50,6 @@ public class AdjacencyListTest {
 		list.insertEdge(0, 1, weight);
 		list.insertEdge(0, 2, weight);
 		
-
 		assertEquals(3, list.numEdges());
 		assertEquals(ADJ_LIST, list.toString());
 	}

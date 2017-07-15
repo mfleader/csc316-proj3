@@ -57,8 +57,9 @@ public class AdjacencyList {
 				array[vertex2] = new Edge(vertex2, vertex1, weight, current);
 			} else {
 				while (current.getNext() != null && current.getDestination() < vertex1) {
+					previous = current;
 					current = current.getNext();
-				}
+				}				
 				Edge edge = new Edge(vertex1, vertex2, weight);			
 				previous.setNext(edge);
 				edge.setNext(current);
@@ -90,7 +91,7 @@ public class AdjacencyList {
 		}
 		edge = edge.getNext();
 		while (edge != null) {			
-			list += String.format("%5d", edge.getDestination());
+			list += String.format(" %4d", edge.getDestination());
 			edge = edge.getNext();
 		}		
 		return list;

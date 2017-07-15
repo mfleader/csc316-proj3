@@ -2,24 +2,23 @@ package main;
 
 public class Edge implements Comparable<Edge> {
 	
-	private Integer origin;
-	private Integer destination;
+	private int origin;
+	private int destination;
 	private double weight;
 	private Edge next;
 	
 	
 	
-	public Edge(Integer origin, Integer destination, double weight, Edge next) {
-		super();
-		this.origin = origin;
-		this.destination = destination;
+	public Edge(int origin, int destination, double weight, Edge next) {		
+		this.origin = (origin < destination) ? origin : destination;
+		this.destination = (origin < destination) ? destination : origin;
 		this.weight = weight;
 		this.next = next;
 	}
 
 
 
-	public Edge(Integer origin, Integer destination, double weight) {
+	public Edge(int origin, int destination, double weight) {
 		this(origin, destination, weight, null);
 	}
 
@@ -28,7 +27,7 @@ public class Edge implements Comparable<Edge> {
 	/**
 	 * @return the origin
 	 */
-	Integer getOrigin() {
+	int getOrigin() {
 		return origin;
 	}
 
@@ -37,7 +36,7 @@ public class Edge implements Comparable<Edge> {
 	/**
 	 * @param origin the origin to set
 	 */
-	void setOrigin(Integer origin) {
+	void setOrigin(int origin) {
 		this.origin = origin;
 	}
 
@@ -46,7 +45,7 @@ public class Edge implements Comparable<Edge> {
 	/**
 	 * @return the destination
 	 */
-	Integer getDestination() {
+	int getDestination() {
 		return destination;
 	}
 
@@ -55,7 +54,7 @@ public class Edge implements Comparable<Edge> {
 	/**
 	 * @param destination the destination to set
 	 */
-	void setDestination(Integer destination) {
+	void setDestination(int destination) {
 		this.destination = destination;
 	}
 
@@ -112,10 +111,65 @@ public class Edge implements Comparable<Edge> {
 		return 0;
 	}
 	
+	public int compareVerticesTo(Edge other) {
+		if (this.origin < other.getOrigin()) {
+			return -1;
+		} else if (this.origin == other.getOrigin()) {
+			if (this.destination < other.getDestination()) {
+				return -1;
+			} else if (this.destination == other.getDestination()) {
+				return 0;
+			}
+		}		
+		return 1;
+	}
+	
+	
 	public String toString() {
-		return String.format("%4d%5d", origin, destination);
+		return String.format("%4d %4d", origin, destination);
 	}
 
+
+
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		/*
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		
+		if (destination == null) {
+			if (other.destination != null)
+				return false;
+		} else if (!destination.equals(other.destination))
+			return false;
+		if (origin == null) {
+			if (other.origin != null)
+				return false;
+		} else if (!origin.equals(other.origin))
+			return false;
+		*/
+		Edge other = (Edge) obj;
+		if (destination != other.getDestination() && destination != other.getOrigin()) {
+			return false;
+		}
+		if (origin != other.getOrigin() && origin != other.getDestination()) {
+			return false;
+		}		
+		if (Double.doubleToLongBits(weight) != Double.doubleToLongBits(other.weight))
+			return false;
+		return true;
+	}
+
+	
 	
 	
 	
