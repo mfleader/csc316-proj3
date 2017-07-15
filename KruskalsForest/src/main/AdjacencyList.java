@@ -56,11 +56,11 @@ public class AdjacencyList {
 			if (vertex1 < current.getDestination()) {
 				array[vertex2] = new Edge(vertex2, vertex1, weight, current);
 			} else {
-				while (current.getNext() != null && current.getDestination() < vertex1) {
+				while (current != null && current.getDestination() < vertex1) {
 					previous = current;
 					current = current.getNext();
 				}				
-				Edge edge = new Edge(vertex1, vertex2, weight);			
+				Edge edge = new Edge(vertex2, vertex1, weight);			
 				previous.setNext(edge);
 				edge.setNext(current);
 			}

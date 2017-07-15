@@ -7,17 +7,13 @@ public class Edge implements Comparable<Edge> {
 	private double weight;
 	private Edge next;
 	
-	
-	
 	public Edge(int origin, int destination, double weight, Edge next) {		
-		this.origin = (origin < destination) ? origin : destination;
-		this.destination = (origin < destination) ? destination : origin;
+		this.origin = origin;
+		this.destination = destination;
 		this.weight = weight;
 		this.next = next;
 	}
-
-
-
+	
 	public Edge(int origin, int destination, double weight) {
 		this(origin, destination, weight, null);
 	}

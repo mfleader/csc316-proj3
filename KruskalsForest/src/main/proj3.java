@@ -27,7 +27,7 @@ public class proj3 {
 				int destination = lineScanner.nextInt();
 				double weight = lineScanner.nextDouble();
 				adjacencyList.insertEdge(origin, destination, weight);
-				Edge edge = new Edge(origin, destination, weight);
+				OrderedEdge edge = new OrderedEdge(origin, destination, weight);
 				heap.insert(edge);				
 			}
 		}
@@ -37,19 +37,13 @@ public class proj3 {
 		output.println(heap.toString());
 		output.println("===========MST=============");
 		minSpanList = kruskalMST(heap);
-		//System.out.println(minSpanList);
 		output.println(toStringMST());
 		output.println("=======ADJ_LIST============");
 		output.print(adjacencyList.toString());
-		
-		
-
-				
 	}
 		
 	
 	public static ArrayList<Edge> kruskalMST(ArrayListMinHeap<Edge> heap) {
-		//ArrayList<Edge> minSpanList = new ArrayList<Edge>();
 		UpTree upTree = new UpTree();
 		for (Integer key : adjacencyList.getVertices()) {
 			upTree.makeSet(key);
@@ -62,8 +56,6 @@ public class proj3 {
 			if (u != v) {
 				upTree.union(u, v);				
 				minSpanList.add(findInsertion(edge), edge);
-				//System.out.println("findInsertion(" + edge + ") = " + findInsertion(edge));
-				//System.out.println(minSpanList);
 				components--;
 			}
 		}		
@@ -72,7 +64,6 @@ public class proj3 {
 	
 	public static String toStringMST() {
     	String list = "";
-    	System.out.println("1 minSpanList.size() = " + minSpanList.size());
     	if (minSpanList.size() > 0) {
     		list = minSpanList.get(0).toString();
     	}
@@ -86,9 +77,7 @@ public class proj3 {
 	
 	private static int findInsertion(Edge edge) {		
 		if (minSpanList.size() != 0) {
-			//System.out.println("minSpanList not empty");
 			for (int k = 0; k < minSpanList.size(); k++) {
-				//System.out.println("k = " + k);
 				Edge other = (Edge) minSpanList.get(k); 
 				if (edge.compareVerticesTo(other) < 0) {
 					return k;

@@ -51,7 +51,7 @@ public class AdjacencyListTest {
 		list.insertEdge(0, 2, weight);
 		
 		assertEquals(3, list.numEdges());
-		assertEquals(ADJ_LIST, list.toString());
+		assertTrue(list.toString().equals(ADJ_LIST));
 	}
 
 	/**
