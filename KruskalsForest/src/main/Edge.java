@@ -2,11 +2,27 @@ package main;
 
 public class Edge implements Comparable<Edge> {
 	
+	/** the first vertex in this vertex pair */
 	private int origin;
+	/** the second vertex in this vertex pair */
 	private int destination;
+	/** the value associated with this vertex pair */
 	private double weight;
+	/** the next Edge in the list of Edges */
 	private Edge next;
 	
+	/**
+	 * Constructs an Edge that represents a connection between two vertices,
+	 * and a weight of priority/importance/value associated with this edge.
+	 * @param origin
+	 * 						the first vertex in the pair
+	 * @param destination
+	 * 						the second vertex in the pair
+	 * @param weight
+	 * 						the value associated with this edge
+	 * @param next
+	 * 						the next Edge in the list of Edges
+	 */
 	public Edge(int origin, int destination, double weight, Edge next) {		
 		this.origin = origin;
 		this.destination = destination;
@@ -91,11 +107,6 @@ public class Edge implements Comparable<Edge> {
 	}
 
 
-
-
-
-
-
 	@Override
 	public int compareTo(Edge other) {
 		if (weight < other.getWeight()) {
@@ -126,33 +137,8 @@ public class Edge implements Comparable<Edge> {
 	}
 
 
-
-
-
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
 	@Override
 	public boolean equals(Object obj) {
-		/*
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		
-		if (destination == null) {
-			if (other.destination != null)
-				return false;
-		} else if (!destination.equals(other.destination))
-			return false;
-		if (origin == null) {
-			if (other.origin != null)
-				return false;
-		} else if (!origin.equals(other.origin))
-			return false;
-		*/
 		Edge other = (Edge) obj;
 		if (destination != other.getDestination() && destination != other.getOrigin()) {
 			return false;

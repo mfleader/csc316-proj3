@@ -39,7 +39,6 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
      */
     private void makeArray(E[] array) {
     	for (int k = 0; k < array.length; k++) {
-    		//this.array.set(k, new Integer(array[k]));
     		insert(array[k]);
     	}
     }
@@ -156,11 +155,6 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
         if (array.get(left(parentIndex)).compareTo(array.get(right(parentIndex))) <= 0) {
         	return left(parentIndex);
         }
-        /*
-        if (array.get(left(parentIndex)) <= array.get(right(parentIndex))) {
-        	return left(parentIndex);
-        }
-        */
         return right(parentIndex);
     }
 
@@ -177,12 +171,6 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     			swap(parentIndex, childIndex);
     			upHeap(parentIndex);
     		}
-    		/*
-    		if (array.get(parentIndex) > array.get(childIndex)) {
-    			swap(parentIndex, childIndex);
-    			upHeap(parentIndex);
-    		}
-    		*/
     	}
     }
 
@@ -199,13 +187,6 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     			// the parent is now at the minChildIndex, so downHeap the value at that index
     			downHeap(minChildIndex);
     		}
-    		/*
-    		if (array.get(minChildIndex) < array.get(nodeIndex)) {
-    			swap(minChildIndex, nodeIndex);
-    			// the parent is now at the minChildIndex, so downHeap the value at that index
-    			downHeap(minChildIndex);
-    		}
-    		*/
     	}
     }
     
@@ -222,7 +203,11 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
         array.set(j, tmp);
     }
     
-    
+    /**
+     * Validates whether the heap property has been violated
+     * @return true if every parent if less than or equal to 
+     * 		    their children
+     */
     public boolean isHeap() {
     	for (int k = 1; k < array.size(); ++k) {
     		if (array.get(parent(k)).compareTo(array.get(k)) > 0) {
@@ -232,6 +217,9 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     	return true;
     }
     
+    /**
+     * @return a String representation of this heap
+     */
     public String toString() {
     	String heapStr = "";
     	if (array.size() > 0) {
@@ -244,7 +232,4 @@ public class ArrayListMinHeap<E extends Comparable<E>> {
     	}
     	return heapStr;
     }
-    
-    
-
 }

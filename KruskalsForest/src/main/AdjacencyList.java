@@ -11,19 +11,41 @@ import java.util.ArrayList;
  */
 public class AdjacencyList {
 	
+	/** maximum capacity of the array */
 	private final static int CAPACITY = 5000;
+	/** the array of edges */
 	private Edge[] array;
+	/** the number of edges in the array */
 	private int numEdges = 0;
+	/** the list of vertices in this graph */
 	private ArrayList<Integer> vertexList = new ArrayList<Integer>();
 	
+	/**
+	 * Adjacency List constructor
+	 * @param capacity
+	 * 					max capacity for the array
+	 */
 	public AdjacencyList(int capacity) {
 		array = new Edge[capacity];	
 	}
 	
+	/**
+	 * Adjacency List null constructor
+	 */
 	public AdjacencyList() {
 		this(CAPACITY);
 	}
 	
+	/**
+	 * Inserts an edge containing vertex1 and vertex2 at those corresponding
+	 * indices. Edge lists are in increasing order by destination vertex.
+	 * @param vertex1
+	 * 						the first vertex in the edge's ordered pair
+	 * @param vertex2
+	 * 						the second vertex in the edge's ordered pair
+	 * @param weight
+	 * 						the weight of the E
+	 */
 	public void insertEdge(int vertex1, int vertex2, double weight) {
 		Edge current = null;
 		Edge previous = null;
@@ -68,7 +90,9 @@ public class AdjacencyList {
 		numEdges++;
 	}
 	
-	
+	/**
+	 * @return a String representation of the current state of the Adjacency List
+	 */
 	public String toString() {
 		String list = "";
 		if (numVertices() > 0) {
@@ -82,7 +106,16 @@ public class AdjacencyList {
 		return list;
 	}
 	
+	/**
+	 * Creates a String representation of the destination vertices connected to
+	 * an origin vertex in this Adjacency List.
+	 * @param vertex
+	 * 					the origin vertex that corresponds to the array index that holds
+	 * 					the edge list for that origin vertex
+	 * @return a list of the destination vertices connected to this origin by edges
+	 */
 	public String edgeListAt(int vertex) {
+		//String list = String.format("[%4d] ", vertex);
 		String list = "";
 		Edge edge = null;		
 		if (array[vertex] != null) {
@@ -96,6 +129,7 @@ public class AdjacencyList {
 		}		
 		return list;
 	}
+	
 	
 	public int numEdges() {
 		return numEdges;

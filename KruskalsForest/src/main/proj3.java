@@ -6,6 +6,11 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * This program creates a Minimum Spanning Tree, using Kruskal's Algorithm, from of a set vertex pairs.
+ * @author Matthew F. Leader
+ *
+ */
 public class proj3 {
 	
 	private static AdjacencyList adjacencyList = new AdjacencyList();
@@ -13,16 +18,21 @@ public class proj3 {
 	
 	public static void main(String[] args) {
 		
+		displayIntro();
+		
         Scanner console = new Scanner(System.in);
         Scanner input = getInputScanner(console);
         PrintStream output = getOutputPrintStream(console);        
         ArrayListMinHeap<Edge> heap = new ArrayListMinHeap<Edge>();           
 		String line;
+		Scanner lineScanner;
+		
+		
 		
 		while (input.hasNextLine()) {
 			line = input.nextLine();
 			if (!line.equals("-1")) {
-				Scanner lineScanner = new Scanner(line);
+				lineScanner = new Scanner(line);
 				int origin = lineScanner.nextInt();
 				int destination = lineScanner.nextInt();
 				double weight = lineScanner.nextDouble();
@@ -32,17 +42,20 @@ public class proj3 {
 			}
 		}
 		
-		
-		output.println("==========HEAP=============");
 		output.println(heap.toString());
-		output.println("===========MST=============");
 		minSpanList = kruskalMST(heap);
 		output.println(toStringMST());
-		output.println("=======ADJ_LIST============");
 		output.print(adjacencyList.toString());
 	}
 		
-	
+	/**
+	 * Kruskal's algorithm. It creates a tree that includes all of the vertices in the
+	 * graph, without any cycles, and with minimum possible total edge weight.
+	 * @param heap
+	 * 					a minimum binary heap with the set of all edges prioritized by
+	 * 					edge weight
+	 * @return a spanning tree whose sum of edge weights is as small as possible
+	 */
 	public static ArrayList<Edge> kruskalMST(ArrayListMinHeap<Edge> heap) {
 		UpTree upTree = new UpTree();
 		for (Integer key : adjacencyList.getVertices()) {
@@ -62,6 +75,9 @@ public class proj3 {
 		return minSpanList;
 	}
 	
+	/**
+	 * @return a String representation of the list of nodes in the Minimum Spanning Tree
+	 */
 	public static String toStringMST() {
     	String list = "";
     	if (minSpanList.size() > 0) {
@@ -75,6 +91,13 @@ public class proj3 {
     	return list;
 	}
 	
+	/**
+	 * Find the index of the first edge that has origin and destination vertices
+	 * greater than this edge, or append to the end.
+	 * @param edge
+	 * 						the edge to insert
+	 * @return the appropriate insertion point in the Minimum Spanning Tree list
+	 */
 	private static int findInsertion(Edge edge) {		
 		if (minSpanList.size() != 0) {
 			for (int k = 0; k < minSpanList.size(); k++) {
@@ -87,9 +110,6 @@ public class proj3 {
 		}
 		return 0;
 	}
-	
-	
-	
 	
     /**
      * Returns a Scanner for input from a file.
@@ -131,6 +151,15 @@ public class proj3 {
             }
         }
         return outputFile;
+    }
+    
+    /**
+     * Display program introduction to screen
+     */
+    public static void displayIntro() {
+    	System.out.println("This program creates a Minimum Spanning Tree, using Kruskal's Algorithm, from of a set vertex pairs.");
+    	System.out.println("Please provide input in the form of a .txt file, where each vertex pair delimited by a new line, and ");
+    	System.out.println("the file ends with -1 as a sentinel value.");
     }
     
     
